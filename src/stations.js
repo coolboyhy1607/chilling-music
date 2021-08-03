@@ -1,7 +1,16 @@
 const stations = [
   {
+    id: "g2FDmGQV428",
+    name: "EDM Tik Tok REMIX"
+  },
+  {
+    id: "Dk4qWVL21mc",
+    name: "Nhạc Ballad - ACV Đêm Chill"
+
+  },
+  {
     id: "5kflkSrTWh0",
-    name: "Cafe Không Đường…Tướng Quân...Sầu Tương Tư💘💘Những Bản Ballad Chill Nhẹ Nhàng Buồn Nhất 2021",
+    name: "Cafe Không Đường💘💘Những Bản Ballad Chill",
   },
 
   {
