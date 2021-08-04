@@ -57,7 +57,7 @@ function Room() {
       // handleStationChanged();
     }
   }
-
+  strings.setLanguage("vi");
   useKeysPressed([
     [
       "Escape",
