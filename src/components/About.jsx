@@ -1,33 +1,17 @@
-import React from "react";
 import { useRecoilValue } from "recoil";
-import FabImage from "../images/avatars/Fab.png";
-import MaryImage from "../images/avatars/Mary.png";
+import QuyenImage from "../images/avatars/quyen.png";
 import { aboutShownState } from "../recoilState";
 import strings from "../strings";
 import Button from "./Button";
 import FadeInDiv from "./FadeInDiv";
 import Icon from "./Icon";
+import { useState, useEffect } from 'react';
 
 function About() {
   const aboutShown = useRecoilValue(aboutShownState);
 
   return (
     <FadeInDiv show={aboutShown} className="about-container">
-      {/* <span style={{ marginBottom: 10, fontSize: "30px" }}>
-        lofi.cafe
-        <BlinkingCursor
-          blinking
-          style={{
-            fontSize: "26px",
-            display: "inline-block",
-            marginLeft: "1px",
-            width: "22px",
-            lineHeight: 0,
-            position: "relative",
-            bottom: 3,
-          }}
-        />
-      </span> */}
       <TeamMembers />
       <span style={{ marginBottom: "4px" }}>
         <span className="red">{strings.arrows}</span> {strings.changeStation}
@@ -51,8 +35,12 @@ function About() {
         <span className="red">ESC</span> {strings.closeThis}
       </span>
       <NewsletterForm />
-      <a href="mailto:hey@lofi.cafe">
+      <a href="mailto:hey@chilling.bar">
         <Button text={strings.sayHi} />
+      </a>
+      <span style={{ marginBottom: "12px" }} />
+      <a target="_blank" href="https://www.buymeacoffee.com/congquyen">
+        <span>Buy me a beer </span><span>🍺</span>
       </a>
     </FadeInDiv>
   );
@@ -61,8 +49,7 @@ function About() {
 const TeamMembers = () => {
   return (
     <span style={{ display: "flex", marginBottom: "10px" }}>
-      <TeamMember name="Fabrizio" username="linuz90" image={FabImage} />
-      <TeamMember name="Marianna" username="maridivi89" image={MaryImage} />
+      <TeamMember name="Cong Quyen" username="quyen.cong" image={QuyenImage} />
     </span>
   );
 };
@@ -70,7 +57,7 @@ const TeamMembers = () => {
 const TeamMember = ({ name, username, image }) => {
   return (
     <a
-      href={`https://twitter.com/` + username}
+      href={`https://www.facebook.com/` + username}
       target="_blank"
       rel="noopener noreferrer"
       style={{
