@@ -2,26 +2,29 @@
 
 @font-face {
   font-family: "ChronoType";
-  src: url("fonts/ChronoType.eot");
-  src: url("fonts/ChronoType.eot?#iefix") format("embedded-opentype"),
-    url("fonts/ChronoType.woff") format("woff"),
-    url("fonts/ChronoType.ttf") format("truetype"),
-    url("fonts/ChronoType.svg#ChronoType") format("svg");
+  src: url("./fonts/ChronoType.eot");
+  src: url("./fonts/ChronoType.eot?#iefix") format("embedded-opentype"),
+    url("./fonts/ChronoType.woff") format("woff"),
+    url("./fonts/ChronoType.ttf") format("truetype"),
+    url("./fonts/ChronoType.svg#ChronoType") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "pricedown";
-  src: url("fonts/pricedown.woff");
-  src: url("fonts/ChronoType.woff") format("woff");
+  src: url("./fonts/pricedown.eot");
+  src: url("./fonts/pricedown.eot#iefix") format("embedded-opentype"),
+    url("./fonts/pricedown.woff") format("woff"),
+    url("./fonts/pricedown.ttf") format("truetype"),
+    url("./fonts/pricedown.svg#Pricedown") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   @font-face {
-    font-family: "ChronoType";
-    src: url("fonts/ChronoType.svg") format("svg");
+    font-family: "pricedown";
+    src: url("./fonts/pricedown.svg") format("svg");
     font-weight: normal;
     font-style: normal;
   }
@@ -66,12 +69,12 @@ body {
 
 /* cursors */
 body {
-  cursor: url("images/cursors/default.svg"), default !important;
+  cursor: url("./images/cursors/default.svg"), default !important;
 }
 button,
 select,
 .pointer {
-  cursor: url("images/cursors/pointer.svg"), pointer !important;
+  cursor: url("./images/cursors/pointer.svg"), pointer !important;
 }
 
 h2,
@@ -92,7 +95,7 @@ body,
   font-family: "VT323", monospace;
 }
 #container.ja * {
-  font-family: "pricedown", monospace;
+  font-family: "ChronoType", monospace;
 }
 
 body,
@@ -391,7 +394,7 @@ input::placeholder {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url(images/lines.jpg);
+  background: url(./images/lines.jpg);
   z-index: 10;
   background-size: 7px auto;
   mix-blend-mode: overlay;
@@ -406,7 +409,7 @@ input::placeholder {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url(images/vignette.png);
+  background: url(./images/vignette.png);
   z-index: 11;
   background-size: 100% 100%;
   mix-blend-mode: overlay;
