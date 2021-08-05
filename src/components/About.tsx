@@ -4,8 +4,9 @@ import { aboutShownState } from "../recoilState";
 import strings from "../strings";
 import Button from "./Button";
 import FadeInDiv from "./FadeInDiv";
-import Icon from "./Icon";
-import { useState, useEffect } from 'react';
+import {useFormSubmission} from "../utils/netlifyForm";
+import {FormField} from "../types/types";
+import React from "react";
 
 function About() {
   const aboutShown = useRecoilValue(aboutShownState);
@@ -89,53 +90,51 @@ const TeamMember = ({ name, username, image }) => {
     </a>
   );
 };
-
+const formConfig: FormField[] = [
+  { initial: "", name: "Name", type: "text", element: "input" },
+  { initial: "", name: "Email", type: "email", element: "input" },
+  {
+    initial: "",
+    name: "bot-field",
+    type: "hidden",
+    element: "input",
+    className: "hidden"
+  }
+]
 const NewsletterForm = () => {
+
+  const { formState, fieldsState, submitForm, updateField } = useFormSubmission(
+    formConfig
+  )
+  if (formState === "SUCCESS") {
+    return <div>Thanks! We&apos;ll be in touch shortly</div>
+  }
   return (
     <form
-      action="https://buttondown.email/api/emails/embed-subscribe/lofi"
-      method="post"
-      target="popupwindow"
-      onSubmit="window.open('https://buttondown.email/lofi', 'popupwindow')"
-      className="embeddable-buttondown-form"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-end",
-        marginBottom: "4px",
-      }}
+      name="contact"
+      onSubmit={submitForm}
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
     >
-      <span style={{ display: "block", marginBottom: "6px" }}>
-        <Icon name="mail" style={{ position: "relative", bottom: "-3px" }} />{" "}
-        {strings.updates}
-      </span>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "nowrap",
-          alignItems: "center",
-        }}
-      >
-        <input
-          type="email"
-          className="green-box-small"
-          placeholder="your@amazing.email"
-          name="email"
-          id="bd-email"
-          style={{ width: "188px" }}
-        />
-        <input type="hidden" value="1" name="embed" />
-        <button
-          text="Subscribe"
-          type="submit"
-          value="Subscribe"
-          style={{ flex: 0 }}
-        >
-          <Icon name="checkmark" style={{ marginLeft: "5px" }} />
-        </button>
-      </div>
+      {formConfig.map(({ name, element, type, className }) =>
+        React.createElement(element, {
+          key: name,
+          type,
+          name,
+          value: fieldsState[name],
+          onChange: updateField,
+          placeholder: name,
+          className,
+          style: {display:"flex",flexDirection:"columm",margin:"0 0 10px 0"},
+        })
+      )}
+      <input type="hidden" name="form-name" value="contact" />
+      <span style={{ marginBottom: "12px" }}></span>
+      <button type="submit">Send</button>
+      {formState === "SUBMITTING" && <div>Sending...</div>}
+      {formState === "ERROR" && <div>Oops! Something went wrong!</div>}
     </form>
-  );
+  )
 };
 
 export default About;
