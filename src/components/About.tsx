@@ -32,14 +32,14 @@ function About() {
       <span style={{ marginBottom: "4px" }}>
         <span className="red">L</span> {strings.lowPowerMode}
       </span>
-      <span style={{ marginBottom: "12px" }}>
+      <span style={{ marginBottom: "16px" }}>
         <span className="red">ESC</span> {strings.closeThis}
       </span>
       <NewsletterForm />
       <a href="mailto:hey@chilling.bar">
         <Button text={strings.sayHi} />
       </a>
-      <span style={{ marginBottom: "12px" }} />
+      <span style={{ marginBottom: "16px" }} />
       <a target="_blank" href="https://www.buymeacoffee.com/congquyen">
         <span>Buy me a beer </span><span>🍺</span>
       </a>
@@ -110,12 +110,7 @@ const NewsletterForm = () => {
     return <div>Thanks! We&apos;ll be in touch shortly</div>
   }
   return (
-    <form
-      name="contact"
-      onSubmit={submitForm}
-      data-netlify="true"
-      data-netlify-honeypot="bot-field"
-    >
+    <form name="contact" onSubmit={submitForm} netlify netlify-honeypot="bot-field">
       {formConfig.map(({ name, element, type, className }) =>
         React.createElement(element, {
           key: name,
@@ -125,14 +120,15 @@ const NewsletterForm = () => {
           onChange: updateField,
           placeholder: name,
           className,
-          style: {display:"flex",flexDirection:"columm",margin:"0 0 10px 0"},
+          style: {display:"flex",flexDirection:"columm",margin:"0 0 10px auto"},
         })
       )}
       <input type="hidden" name="form-name" value="contact" />
-      <span style={{ marginBottom: "12px" }}></span>
-      <button type="submit">Send</button>
-      {formState === "SUBMITTING" && <div>Sending...</div>}
-      {formState === "ERROR" && <div>Oops! Something went wrong!</div>}
+      <span style={{ marginBottom: "12px" }}>
+        <button type="submit">Send</button>
+        {formState === "SUBMITTING" && <span style={{display:"flex"}}>Sending...</span>}
+        {formState === "ERROR" && <span style={{display:"flex"}}>Oops! Something went wrong!</span>}
+      </span>
     </form>
   )
 };
