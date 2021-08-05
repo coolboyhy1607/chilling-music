@@ -14,7 +14,7 @@ export default function useTweetStation() {
       window.open(
         createTwitterLink({
           text: `Chilling with 🎧 ${currentStation.name}`,
-          url: `https://lofi.cafe/?station=${currentStation.id}`,
+          url: `https://chilling.bar/?station=${currentStation.id}`,
         })
       );
     }

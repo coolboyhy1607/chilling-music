@@ -10,9 +10,9 @@ import React from "react";
 
 function About() {
   const aboutShown = useRecoilValue(aboutShownState);
-
+  const aboutShown2=aboutShown? "flex" : "none";
   return (
-    <FadeInDiv show={aboutShown} className="about-container">
+    <FadeInDiv show="false"  style={{display:aboutShown2}} className="about-container">
       <TeamMembers />
       <span style={{ marginBottom: "4px" }}>
         <span className="red">{strings.arrows}</span> {strings.changeStation}
