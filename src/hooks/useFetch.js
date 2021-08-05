@@ -14,7 +14,7 @@ const useFetch = (url, deps = []) => {
       }
     };
     fetchData();
-  }, deps);
+  });
   return { response, error };
 };
 
