@@ -1,5 +1,9 @@
 const stations = [
   {
+    id: "xyqQ4iT4IeU&list=PLEf2r8gdfvQqfwv6gQ9Fckq9KICn6LQAr",
+    name: "EDM人気ヒット曲 Hundred Million Hits"
+  },
+  {
     id: "g2FDmGQV428",
     name: "EDM Tik Tok REMIX"
   },
