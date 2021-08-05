@@ -3,17 +3,18 @@ import LocalizedStrings from "react-localization";
 
 const strings = new LocalizedStrings({
   en: {
-    listeningNow: "listening now",
-    tapToStart: "tap to start",
-    pressToStart: "press any key to start",
-    changeStation: "change station",
+    bartender: "bartender: ",
+    listeningNow: "serving now",
+    tapToStart: "tap to order something...  ",
+    pressToStart: "press any key to order something...",
+    changeStation: "change your seat",
     playPause: "play/pause",
-    tweetThisStation: "tweet this station",
+    tweetThisStation: "share your felling",
     changeGif: "change gif",
     showVideo: "show original video",
     lowPowerMode: "low-power mode",
     closeThis: "close this",
-    sayHi: "Or click here to say hi!",
+    sayHi: "Or click here to talk with bartender",
     updates: "New stations & updates",
     arrows: "arrows",
     spacebar: "spacebar",
@@ -35,8 +36,9 @@ const strings = new LocalizedStrings({
     spacebar: "phím cách",
   },
   ja: {
-    tapToStart: "タップしてスタートしてください",
-    pressToStart: "キーを押してスタートしてください",
+    bartender:"マスター：",
+    tapToStart: "タップして注文してください",
+    pressToStart: "キーを押して注文してください",
   },
   it: {
     listeningNow: "in ascolto ora",
