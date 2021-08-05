@@ -65,6 +65,7 @@ function Selector({ currentStationId, setCurrentStationId, isPlaying }) {
       value={currentStationId}
       name="stations"
       id="stations-selector"
+      key={currentStationId}
     >
       {
         <AnimatePresence>

@@ -7,6 +7,7 @@ import FadeInDiv from "./FadeInDiv";
 import {useFormSubmission} from "../utils/netlifyForm";
 import {FormField} from "../types/types";
 import React from "react";
+import Icon from "./Icon";
 
 function About() {
   const aboutShown = useRecoilValue(aboutShownState);
@@ -35,12 +36,16 @@ function About() {
       <span style={{ marginBottom: "16px" }}>
         <span className="red">ESC</span> {strings.closeThis}
       </span>
+      <span style={{ display: "block", marginBottom: "6px" }}>
+        <Icon name="mail" style={{ position: "relative", bottom: "-3px" }} />{" "}
+        {strings.updates}
+      </span>
       <NewsletterForm />
       <a href="mailto:hey@chilling.bar">
-        <Button text={strings.sayHi} />
+        <Button style={{marginTop:"10px"}} text={strings.sayHi} />
       </a>
       <span style={{ marginBottom: "16px" }} />
-      <a target="_blank" href="https://www.buymeacoffee.com/congquyen">
+      <a target="_blank" rel="noreferrer" href="https://www.buymeacoffee.com/congquyen">
         <span>Buy me a beer </span><span>🍺</span>
       </a>
     </FadeInDiv>
@@ -50,6 +55,9 @@ function About() {
 const TeamMembers = () => {
   return (
     <span style={{ display: "flex", marginBottom: "10px" }}>
+      <span style={{ marginBottom: "4px" }}>
+        {strings.bartender}
+      </span>
       <TeamMember name="Cong Quyen" username="quyen.cong" image={QuyenImage} />
     </span>
   );
@@ -110,7 +118,7 @@ const NewsletterForm = () => {
     return <div>Thanks! We&apos;ll be in touch shortly</div>
   }
   return (
-    <form name="contact" onSubmit={submitForm} netlify netlify-honeypot="bot-field">
+    <form name="contact" onSubmit={submitForm}>
       {formConfig.map(({ name, element, type, className }) =>
         React.createElement(element, {
           key: name,
@@ -120,15 +128,14 @@ const NewsletterForm = () => {
           onChange: updateField,
           placeholder: name,
           className,
-          style: {display:"flex",flexDirection:"columm",margin:"0 0 10px auto"},
+          style: {display:"flex",flexDirection:"columm",margin:"0 0 5px auto"},
+          required:true,
         })
       )}
       <input type="hidden" name="form-name" value="contact" />
-      <span style={{ marginBottom: "12px" }}>
-        <button type="submit">Send</button>
-        {formState === "SUBMITTING" && <span style={{display:"flex"}}>Sending...</span>}
-        {formState === "ERROR" && <span style={{display:"flex"}}>Oops! Something went wrong!</span>}
-      </span>
+      <button type="submit">Send</button>
+      {formState === "SUBMITTING" && <span style={{display:"flex"}}>Sending...</span>}
+      {formState === "ERROR" && <span style={{display:"flex"}}>Oops! Something went wrong!</span>}
     </form>
   )
 };
