@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 export default function FadeInDiv({ show, children, ...otherProps }) {
   return (
     <AnimatePresence>
-      {show && (
+      {(show || otherProps.style.display==="flex") && (
         <motion.div
           initial={{
             y: -20,
