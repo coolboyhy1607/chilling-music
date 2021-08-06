@@ -54,6 +54,8 @@ const gifs = [
   "ZCZ7FHlu3sPek3h0zP",
   "9jwuxt5bXKadi",
   "6705G9I9sUcNCaJF10",
+  "m7wgzm5KXj1qejmiuo1",
+  "mk10atCSi71r3ifxzo1",
 ];
 
 export default gifs;
