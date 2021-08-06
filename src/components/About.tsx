@@ -11,9 +11,9 @@ import Icon from "./Icon";
 
 function About() {
   const aboutShown = useRecoilValue(aboutShownState);
-  const aboutShown2=aboutShown? "flex" : "none";
+  // const aboutShown2=aboutShown? "flex" : "none";
   return (
-    <FadeInDiv show="false"  style={{display:aboutShown2}} className="about-container">
+    <FadeInDiv show={aboutShown}  className="about-container">
       <TeamMembers />
       <span style={{ marginBottom: "4px" }}>
         <span className="red">{strings.arrows}</span> {strings.changeStation}
@@ -42,7 +42,7 @@ function About() {
       </span>
       <NewsletterForm />
       <a href="mailto:hey@chilling.bar">
-        <Button style={{marginTop:"10px"}} text={strings.sayHi} />
+        <Button style={{marginTop:"10px"}} text={strings.sayHi} tooltip="say Hi"/>
       </a>
       <span style={{ marginBottom: "16px" }} />
       <a target="_blank" rel="noreferrer" href="https://www.buymeacoffee.com/congquyen">

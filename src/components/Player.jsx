@@ -165,14 +165,14 @@ function Player({ onStationChanged, isPlaying, setIsPlaying }) {
           <div id="buttons-ui">
             <div style={buttonsStyle}>
               {!isPlaying && (
-                <Button icon="play" onClick={() => handlePlaying(true)} />
+                <Button icon="play" onClick={() => handlePlaying(true)} tooltip="play"/>
               )}
               {isPlaying && (
-                <Button icon="pause" onClick={() => handlePlaying(false)} />
+                <Button icon="pause" onClick={() => handlePlaying(false)} tooltip="pause"/>
               )}
-              <Button icon="shuffle" onClick={handleShufflePlay} />
-              <Button icon="previous" onClick={handleGoBack} />
-              <Button icon="forward" onClick={handleGoForward} />
+              <Button icon="shuffle" onClick={handleShufflePlay} tooltip="shuffle"/>
+              <Button icon="previous" onClick={handleGoBack} tooltip="previous"/>
+              <Button icon="forward" onClick={handleGoForward} tooltip="forward"/>
               {!isIOS && (
                 <VolumeSlider
                   volume={playerVolume}
