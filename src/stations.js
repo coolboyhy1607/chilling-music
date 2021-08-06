@@ -1,20 +1,15 @@
 const stations = [
   {
-    id: "xyqQ4iT4IeU&list=PLEf2r8gdfvQqfwv6gQ9Fckq9KICn6LQAr",
-    name: "EDM人気ヒット曲 Hundred Million Hits"
-  },
-  {
     id: "g2FDmGQV428",
     name: "EDM Tik Tok REMIX"
   },
   {
-    id: "Dk4qWVL21mc",
-    name: "Nhạc Ballad - ACV Đêm Chill"
-
+    id: "5kflkSrTWh0",
+    name: "Ballad Chill💘💘 - Vietnamese",
   },
   {
-    id: "5kflkSrTWh0",
-    name: "Cafe Không Đường💘💘Những Bản Ballad Chill",
+    id: "r0e-DPN0nmI",
+    name: "MASHUP TIKTOK - Vietnamese",
   },
 
   {
@@ -41,10 +36,6 @@ const stations = [
   {
     id: "-5KAN9_CzSA",
     name: "coffee shop radio // 24/7 lofi hip-hop beats",
-  },
-  {
-    id: "b-EF93ebtyM",
-    name: "ローファイ - japanese beats to work / study to",
   },
   // {
   //   id: "esX7SFtEjHg",
@@ -93,11 +84,11 @@ const stations = [
   //     "Super Intelligence - Binaural Beats Concentration Music for Work and Focus, Study Music",
   // },
   {
-    id: "gfiPOgsNO2M",
+    id: "AkHek_VShEE",
     name: "Art of Techno 'Deep' Radio - Melodic - Progressive • House - Dj Mixes Live 24/7 by Trippy Code",
   },
   {
-    id: "hQ3-RN3LKvA",
+    id: "n0Zli_fQeP8",
     name: "Dark Minimal Techno Trip Live Radio 24/7 Dark Monkey Music",
   },
 ];
