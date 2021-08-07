@@ -48,6 +48,9 @@ function About() {
       <a target="_blank" rel="noreferrer" href="https://www.buymeacoffee.com/congquyen">
         <span>Buy me a beer </span><span>🍺</span>
       </a>
+      <iframe plausible-embed src="https://plausible.io/share/chilling.bar?auth=KiplY8FVonPxPtcc5D5my&embed=true&theme=light" scrolling="no" frameborder="0" loading="lazy" style={{width:"1px", minWidth:"100%", height: "1600px"}}></iframe>
+      <div style={{fontSize: "14px", paddingBottom: "14px"}}>Stats powered by <a target="_blank" style={{color: "#4F46E5", textDecoration: "underline"}} href="https://plausible.io">Plausible Analytics</a></div>
+      <script async src="https://plausible.io/js/embed.host.js"></script>
     </FadeInDiv>
   );
 }
