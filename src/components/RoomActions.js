@@ -45,17 +45,18 @@ export default function RoomActions({ fullscreen, fullscreenAvailable }) {
       )}
       {!hasTouch && (
         <Button
-          tooltip="Facebook"
-          icon="facebook"
-          onClick={shareOnFacebook}
-          style={{ marginRight: "14px" }}
-        />
-      )}
-      <Button
         tooltip="Tweet"
         icon="twitter"
         onClick={tweetStation}
         style={{ marginRight: "14px" }}
+      />
+        
+      )}
+      <Button
+          tooltip="Facebook"
+          icon="facebook"
+          onClick={shareOnFacebook}
+          style={{ marginRight: "14px" }}
       />
       <Button
         tooltip="Pomodoro Timer"
