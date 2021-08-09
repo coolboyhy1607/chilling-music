@@ -25,7 +25,7 @@ import RoomActions from "./RoomActions";
 import VisitorsCounter from "./VisitorsCounter";
 import {Link} from "react-router-dom";
 
-function Room() {
+function Club() {
   const [playerShown, setPlayerShown] = useRecoilState(playerShownState);
   const [lowEnergyMode, setLowEnergyMode] = useRecoilState(lowEnergyModeState);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -36,7 +36,7 @@ function Room() {
   const changeGif = useChangeGif();
   const tweetStation = useTweetStation();
   useShowAboutFirstTime(isPlaying);
-  useStationFromUrl("room");
+  useStationFromUrl("club");
 
   const locale = strings.getLanguage();
   const isJapanese = locale === "ja";
@@ -115,7 +115,7 @@ function Room() {
           onStationChanged={handleStationChanged}
         />
       </div>
-      <Link to="/club" className="red goToClub">Go to Club →</Link>
+      <Link to="/" className="red goBackToBar">← Go back to bar</Link>
     </FullScreen>
   );
 }
@@ -124,4 +124,4 @@ export function detectTouch() {
   return "ontouchend" in document;
 }
 
-export default Room;
+export default Club;

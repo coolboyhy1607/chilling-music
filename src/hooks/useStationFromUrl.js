@@ -3,11 +3,11 @@ import { useSetRecoilState } from "recoil";
 import { currentStationIdState } from "../recoilState";
 import getStationFromUrl from "../utils/getStationFromUrl";
 
-export default function useStationFromUrl() {
+export default function useStationFromUrl(type) {
   const setCurrentStationId = useSetRecoilState(currentStationIdState);
 
   useEffect(() => {
-    const stationFromUrl = getStationFromUrl();
+    const stationFromUrl = getStationFromUrl(type);
     if (stationFromUrl) {
       setCurrentStationId(stationFromUrl.id);
     }
