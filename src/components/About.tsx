@@ -115,7 +115,7 @@ const NewsletterForm = () => {
     formConfig
   )
   if (formState === "SUCCESS") {
-    return <span>Thanks! We&apos;ll be in touch shortly</span>
+    return <span>Thanks! Check your inbox to complete</span>
   }
   return (
     <form name="contact" onSubmit={submitForm}>

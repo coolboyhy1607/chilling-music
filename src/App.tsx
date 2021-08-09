@@ -1,11 +1,14 @@
 import {RecoilRoot} from "recoil";
-import Room from "./components/Room";
 import './App.css';
+import { Router } from "./router/router";
+import {BrowserRouter, Link} from "react-router-dom";
 
 function App() {
   return (
     <RecoilRoot>
-      <Room />
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
     </RecoilRoot>
   );
 }
