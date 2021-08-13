@@ -30,13 +30,13 @@ import {Link} from "react-router-dom";
 function Room() {
   const [playerShown, setPlayerShown] = useRecoilState(playerShownState);
   const [lowEnergyMode, setLowEnergyMode] = useRecoilState(lowEnergyModeState);
-  const setPositionPage = useSetRecoilState(positionPage);
+  const [currentPage, setCurrentPage] = useRecoilState(positionPage);
   const [isPlaying, setIsPlaying] = useState(false);
   const setPomodoroShown = useSetRecoilState(pomodoroShownState);
   const setAboutShown = useSetRecoilState(aboutShownState);
 
   const location=useLocation();
-  setPositionPage(location.pathname);
+  setCurrentPage(location.pathname);
 
   const showStatic = useShowStatic();
   const changeGif = useChangeGif();
@@ -121,7 +121,7 @@ function Room() {
           onStationChanged={handleStationChanged}
         />
       </div>
-      <Link to="/club" className="red goToClub" onClick={setPositionPage("/club")}>Go to Club →</Link>
+      <Link to="/club" className="red goToClub" onClick={setCurrentPage("/club")}>Go to Club →</Link>
     </FullScreen>
   );
 }
