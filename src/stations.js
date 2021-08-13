@@ -1,18 +1,18 @@
 const stations = [
   {
-    id: "g2FDmGQV428",
+    id: "_yefk3lq-QQ",
     name: "EDM Tik Tok REMIX",
     type: "/club"
   },
   {
     id: "5kflkSrTWh0",
     name: "Ballad Chill💘💘 - Vietnamese",
-    type: "/"
+    type: "/club"
   },
   {
     id: "r0e-DPN0nmI",
     name: "MASHUP TIKTOK - Vietnamese",
-    type: "/"
+    type: "/club"
   },
 
   {

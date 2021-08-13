@@ -31,6 +31,7 @@ export const newStation = selector({
   key: "newStation",
   get: ({ get }) => {
     const currentPage= get(positionPage)
+    console.debug(stations.filter((station) => station.type === currentPage));
     return stations.filter((station) => station.type === currentPage)
   }
 })
@@ -52,26 +53,33 @@ export const isBufferingState = atom({
 
 export const currentStationIdState = atom({
   key: "currentStationId",
-  default: stations[0].id,
-  effects_UNSTABLE: [localStorageEffect("currentStationId")],
+  default: stations[3].id,
+  effects_UNSTABLE: [
+    localStorageEffect("currentStationId"),
+    ({onSet}) => {
+        onSet(newID => {
+          console.debug("currentStationId:", newID);
+        });
+    }],
 });
 
 export const currentStationState = selector({
   key: "currentStation",
   get: ({ get }) => {
     const currentStationId = get(currentStationIdState);
+    const newstation = get(newStation);
     // const currentPosition=get(positionPage);
-    const currentStation = stations.find(
+    const currentStation = newstation.find(
       (station) => station.id === currentStationId
     );
     if (currentStation) {
       return currentStation;
     } else {
       localStorage.removeItem("currentStationId");
-      return stations[0];
+      return newstation[0];
     }
   },
-  set: ({get, set}, currentStation) => set(currentStationIdState, currentStation)
+  // set: ({get, set}, currentStation) => set(currentStationIdState, currentStation)
 });
 
 export const currentStationIndexState = selector({
