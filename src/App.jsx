@@ -1,7 +1,7 @@
 import {RecoilRoot} from "recoil";
 import './App.css';
 import { Router } from "./router/router";
-import {BrowserRouter, Link} from "react-router-dom";
+import {BrowserRouter } from "react-router-dom";
 
 function App() {
   return (

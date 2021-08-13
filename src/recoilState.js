@@ -22,7 +22,18 @@ const localStorageEffect =
   };
 
 /* --------------------------------- Player --------------------------------- */
+export const positionPage=atom({
+  key: "positionPage",
+  default: "/",
+});
 
+export const newStation = selector({
+  key: "newStation",
+  get: ({ get }) => {
+    const currentPage= get(positionPage)
+    return stations.filter((station) => station.type === currentPage)
+  }
+})
 export const playerShownState = atom({
   key: "playerShown",
   default: false,
@@ -49,6 +60,7 @@ export const currentStationState = selector({
   key: "currentStation",
   get: ({ get }) => {
     const currentStationId = get(currentStationIdState);
+    // const currentPosition=get(positionPage);
     const currentStation = stations.find(
       (station) => station.id === currentStationId
     );
@@ -59,13 +71,15 @@ export const currentStationState = selector({
       return stations[0];
     }
   },
+  set: ({get, set}, currentStation) => set(currentStationIdState, currentStation)
 });
 
 export const currentStationIndexState = selector({
   key: "currentStationIndex",
   get: ({ get }) => {
     const currentStation = get(currentStationState);
-    return stations.findIndex((station) => station === currentStation);
+    const newstation = get(newStation);
+    return newstation.findIndex((station) => station === currentStation);
   },
 });
 
