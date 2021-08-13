@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState,useRecoilValue } from "recoil";
 import useKeysPressed from "../hooks/useKeysPressed";
 import useShowAboutFirstTime from "../hooks/useShowAboutFirstTime";
 import useStationFromUrl from "../hooks/useStationFromUrl";
@@ -11,7 +11,9 @@ import {
   lowEnergyModeState,
   playerShownState,
   pomodoroShownState,
-  positionPage
+  positionPage,
+  currentStationIdState,
+  newStation
 } from "../recoilState";
 import sounds from "../sounds";
 import strings from "../strings";
@@ -30,14 +32,15 @@ import {Link} from "react-router-dom";
 function Club() {
   const [playerShown, setPlayerShown] = useRecoilState(playerShownState);
   const [lowEnergyMode, setLowEnergyMode] = useRecoilState(lowEnergyModeState);
-  const [currentPage, setCurrentPage] = useRecoilState(positionPage);
+  const [currentPage,setCurrentPage] = useRecoilState(positionPage);
   const [isPlaying, setIsPlaying] = useState(false);
   const setPomodoroShown = useSetRecoilState(pomodoroShownState);
   const setAboutShown = useSetRecoilState(aboutShownState);
-
+  const [currentStationId, setCurrentStationId] = useRecoilState(currentStationIdState);
   const location=useLocation();
   setCurrentPage(location.pathname);
-
+  const stations= useRecoilValue(newStation);
+  setCurrentStationId(stations[0].id);
   const showStatic = useShowStatic();
   const changeGif = useChangeGif();
   const tweetStation = useTweetStation();
@@ -121,7 +124,7 @@ function Club() {
           onStationChanged={handleStationChanged}
         />
       </div>
-      <Link to="/" className="red goBackToBar" onClick={setCurrentPage("/")}>← Go back to bar</Link>
+      <Link to="/" className="red goBackToBar">← Go back to bar</Link>
     </FullScreen>
   );
 }

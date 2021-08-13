@@ -23,7 +23,7 @@ function Selector({ currentStationId, setCurrentStationId, isPlaying }) {
     stationsSelectorOpenState
   );
   const stations= useRecoilValue(newStation);
-  const usePositionPage = useRecoilValue(positionPage);
+  // const usePositionPage = useRecoilValue(positionPage);
   const setAboutShown = useSetRecoilState(aboutShownState);
   const setPomodoroShown = useSetRecoilState(pomodoroShownState);
 

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue} from "recoil";
 import useIsIOS from "../hooks/useIsIOS";
 import useKeysPressed from "../hooks/useKeysPressed";
 import {
@@ -23,16 +23,16 @@ import Selector from "./Selector";
 import Spacer from "./Spacer";
 import VolumeSlider from "./VolumeSlider";
 
-const currentStation = useRecoilValue(currentStationState);
-
 function Player({ onStationChanged, isPlaying, setIsPlaying }) {
   const show = useRecoilValue(playerShownState);
 
   const [stationsSelectorOpen, setStationsSelectorOpen] = useRecoilState(
     stationsSelectorOpenState
   );
+
   const stations= useRecoilValue(newStation);
   const [currentStationId, setCurrentStationId] = useRecoilState(currentStationIdState);
+  const currentStation = useRecoilValue(currentStationState);
   const currentStationIndex = useRecoilValue(currentStationIndexState);
   // const currentPage = useRecoilValue(positionPage);
 
@@ -46,6 +46,9 @@ function Player({ onStationChanged, isPlaying, setIsPlaying }) {
 
   const [_embedShown, setEmbedShown] = useRecoilState(embedShownState);
   let embedShown = !error && playerShown && _embedShown;
+
+  //currentStationIdStateの初期値を修正
+  // setCurrentStationId(currentStation.id);
 
   const isIOS = useIsIOS();
 
