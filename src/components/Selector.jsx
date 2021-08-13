@@ -7,8 +7,10 @@ import {
   playerVolumeState,
   pomodoroShownState,
   stationsSelectorOpenState,
+  positionPage,
+  newStation
 } from "../recoilState";
-import stations from "../stations";
+// import stations from "../stations";
 import getCloudfrontGifUrl from "../utils/getCloudfrontGifUrl";
 import plausible from "../utils/plausible";
 import Icon from "./Icon";
@@ -20,7 +22,8 @@ function Selector({ currentStationId, setCurrentStationId, isPlaying }) {
   const [selectorOpen, setSelectorOpen] = useRecoilState(
     stationsSelectorOpenState
   );
-
+  const stations= useRecoilValue(newStation);
+  const usePositionPage = useRecoilValue(positionPage);
   const setAboutShown = useSetRecoilState(aboutShownState);
   const setPomodoroShown = useSetRecoilState(pomodoroShownState);
 
@@ -92,49 +95,49 @@ function Selector({ currentStationId, setCurrentStationId, isPlaying }) {
               onClick={() => setSelectorOpen(false)}
             >
               {stations.map((station) => {
-                const isActive = station.id === currentStationId;
-                return (
-                  <div
-                    className={"station-wrapper pointer"}
-                    onClick={() => {
-                      if (!isActive) {
-                        setCurrentStationId(station.id);
-                      }
-                    }}
-                  >
+                  const isActive = station.id === currentStationId;
+                  return (
                     <div
-                      className={
-                        "station-thumbnail " +
-                        (isActive ? "green-box-small" : "")
-                      }
-                      style={{
-                        position: "relative",
-                        backgroundImage: `url(${getCloudfrontGifUrl(
-                          "station_thumb_" + station.id
-                        )})`,
+                      className={"station-wrapper pointer"}
+                      onClick={() => {
+                        if (!isActive) {
+                          setCurrentStationId(station.id);
+                        }
                       }}
                     >
-                      <a
-                        onClick={(e) => {
-                          e.stopPropagation();
-                        }}
-                        href={`https://www.youtube.com/watch?v=${station.id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <div
+                        className={
+                          "station-thumbnail " +
+                          (isActive ? "green-box-small" : "")
+                        }
                         style={{
-                          position: "absolute",
-                          top: 8,
-                          right: 8,
+                          position: "relative",
+                          backgroundImage: `url(${getCloudfrontGifUrl(
+                            "station_thumb_" + station.id
+                          )})`,
                         }}
                       >
-                        <Icon name="open" />
-                      </a>{" "}
+                        <a
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                          href={`https://www.youtube.com/watch?v=${station.id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            position: "absolute",
+                            top: 8,
+                            right: 8,
+                          }}
+                        >
+                          <Icon name="open" />
+                        </a>{" "}
+                      </div>
+                      <span className="option" key={station.id}>
+                        {station.name}
+                      </span>
                     </div>
-                    <span className="option" key={station.id}>
-                      {station.name}
-                    </span>
-                  </div>
-                );
+                  );
               })}
             </motion.div>
           )}

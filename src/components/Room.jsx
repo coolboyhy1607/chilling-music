@@ -5,11 +5,13 @@ import useKeysPressed from "../hooks/useKeysPressed";
 import useShowAboutFirstTime from "../hooks/useShowAboutFirstTime";
 import useStationFromUrl from "../hooks/useStationFromUrl";
 import useTweetStation from "../hooks/useTweetStation";
+import {useLocation} from "react-router-dom";
 import {
   aboutShownState,
   lowEnergyModeState,
   playerShownState,
   pomodoroShownState,
+  positionPage
 } from "../recoilState";
 import sounds from "../sounds";
 import strings from "../strings";
@@ -28,15 +30,19 @@ import {Link} from "react-router-dom";
 function Room() {
   const [playerShown, setPlayerShown] = useRecoilState(playerShownState);
   const [lowEnergyMode, setLowEnergyMode] = useRecoilState(lowEnergyModeState);
+  const setPositionPage = useSetRecoilState(positionPage);
   const [isPlaying, setIsPlaying] = useState(false);
   const setPomodoroShown = useSetRecoilState(pomodoroShownState);
   const setAboutShown = useSetRecoilState(aboutShownState);
+
+  const location=useLocation();
+  setPositionPage(location.pathname);
 
   const showStatic = useShowStatic();
   const changeGif = useChangeGif();
   const tweetStation = useTweetStation();
   useShowAboutFirstTime(isPlaying);
-  useStationFromUrl("room");
+  useStationFromUrl(location.pathname);
 
   const locale = strings.getLanguage();
   const isJapanese = locale === "ja";
@@ -115,7 +121,7 @@ function Room() {
           onStationChanged={handleStationChanged}
         />
       </div>
-      <Link to="/club" className="red goToClub">Go to Club →</Link>
+      <Link to="/club" className="red goToClub" onClick={setPositionPage("/club")}>Go to Club →</Link>
     </FullScreen>
   );
 }

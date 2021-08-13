@@ -12,8 +12,10 @@ import {
   playerShownState,
   playerVolumeState,
   stationsSelectorOpenState,
+  positionPage,
+  newStation
 } from "../recoilState";
-import stations from "../stations";
+// import stations from "../stations";
 import plausible from "../utils/plausible";
 import BlinkingDots from "./BlinkingDots";
 import Button from "./Button";
@@ -27,12 +29,11 @@ function Player({ onStationChanged, isPlaying, setIsPlaying }) {
   const [stationsSelectorOpen, setStationsSelectorOpen] = useRecoilState(
     stationsSelectorOpenState
   );
-
-  const [currentStationId, setCurrentStationId] = useRecoilState(
-    currentStationIdState
-  );
+  const stations= useRecoilValue(newStation);
   const currentStation = useRecoilValue(currentStationState);
+  const [currentStationId, setCurrentStationId] = useRecoilState(currentStationIdState);
   const currentStationIndex = useRecoilValue(currentStationIndexState);
+  // const currentPage = useRecoilValue(positionPage);
 
   const [reactPlayerLoading, setReactPlayerLoading] = useState(true);
   const [isBuffering, setIsBuffering] = useRecoilState(isBufferingState);
