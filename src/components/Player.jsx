@@ -23,6 +23,8 @@ import Selector from "./Selector";
 import Spacer from "./Spacer";
 import VolumeSlider from "./VolumeSlider";
 
+const currentStation = useRecoilValue(currentStationState);
+
 function Player({ onStationChanged, isPlaying, setIsPlaying }) {
   const show = useRecoilValue(playerShownState);
 
@@ -30,7 +32,6 @@ function Player({ onStationChanged, isPlaying, setIsPlaying }) {
     stationsSelectorOpenState
   );
   const stations= useRecoilValue(newStation);
-  const currentStation = useRecoilValue(currentStationState);
   const [currentStationId, setCurrentStationId] = useRecoilState(currentStationIdState);
   const currentStationIndex = useRecoilValue(currentStationIndexState);
   // const currentPage = useRecoilValue(positionPage);
