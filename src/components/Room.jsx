@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useRecoilState, useSetRecoilState,useRecoilValue  } from "recoil";
 import useKeysPressed from "../hooks/useKeysPressed";
@@ -32,7 +32,7 @@ import {Link} from "react-router-dom";
 function Room() {
   const [playerShown, setPlayerShown] = useRecoilState(playerShownState);
   const [lowEnergyMode, setLowEnergyMode] = useRecoilState(lowEnergyModeState);
-  const setCurrentPage = useSetRecoilState(positionPage);
+  const [currentPage,setCurrentPage] = useRecoilState(positionPage);
   const [isPlaying, setIsPlaying] = useState(false);
   const setPomodoroShown = useSetRecoilState(pomodoroShownState);
   const setAboutShown = useSetRecoilState(aboutShownState);
@@ -42,7 +42,11 @@ function Room() {
   setCurrentPage(location.pathname);
 
   const stations= useRecoilValue(newStation);
-  setCurrentStationId(stations[0].id);
+  useEffect(() => {
+    setCurrentStationId(stations[0].id);
+    if (playerShown) setIsPlaying(true);
+    setLowEnergyMode(false)
+  }, [currentPage]);
   const showStatic = useShowStatic();
   const changeGif = useChangeGif();
   const tweetStation = useTweetStation();
@@ -118,7 +122,9 @@ function Room() {
             <PomodoroTimer />
           </div>
         </div>
-
+        <div className="goToClub">
+        <Link to="/club" className="red">Go to Club</Link><div style={{fontSize:"30px"}}>🔞</div>
+        </div>
         {!playerShown && <PressToStart />}
         <Player
           isPlaying={isPlaying}
@@ -126,7 +132,7 @@ function Room() {
           onStationChanged={handleStationChanged}
         />
       </div>
-      <Link to="/club" className="red goToClub">Go to Club →</Link>
+      
     </FullScreen>
   );
 }

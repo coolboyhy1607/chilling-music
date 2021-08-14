@@ -1,19 +1,49 @@
 const stations = [
   {
-    id: "_yefk3lq-QQ",
-    name: "EDM Tik Tok REMIX",
+    id: "N8z8wKA464Y",
+    name: "Dance Mix Summer Song Radio",
     type: "/club"
   },
   {
-    id: "5kflkSrTWh0",
-    name: "Ballad Chill💘💘 - Vietnamese",
+    id: "gnyW6uaUgk4",
+    name: "Pop Music 2020' Hits 2021",
     type: "/club"
   },
   {
-    id: "r0e-DPN0nmI",
-    name: "MASHUP TIKTOK - Vietnamese",
+    id: "b3FORGBsmNA",
+    name: "Deep House Radio",
     type: "/club"
   },
+   {
+    id:"7JWc5b2hM7w",
+    name:"Tiktok Dance Disco - for zumba / workout / soundrip",
+    type: "/club"
+  },
+  {
+    id: "nGLMFflxX9k",
+    name: "Remixes of Popular Songs🎧",
+    type :"/club"
+  },
+  {
+    id: "qWf-FPFmVw0",
+    name: "Best Shuffle Dance Music",
+    type: "/club"
+  },
+  // {
+  //   id: "_yefk3lq-QQ",
+  //   name: "EDM Tik Tok REMIX",
+  //   type: "/club"
+  // },
+  // {
+  //   id: "5kflkSrTWh0",
+  //   name: "Ballad Chill💘💘 - Vietnamese",
+  //   type: "/club"
+  // },
+  // {
+  //   id: "r0e-DPN0nmI",
+  //   name: "MASHUP TIKTOK - Vietnamese",
+  //   type: "/club"
+  // },
 
   {
     id: "5qap5aO4i9A",

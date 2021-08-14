@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useRecoilState, useSetRecoilState,useRecoilValue } from "recoil";
 import useKeysPressed from "../hooks/useKeysPressed";
@@ -20,8 +20,9 @@ import strings from "../strings";
 import detectFullscreenAvailable from "../utils/detectFullscreenAvailable";
 import plausible from "../utils/plausible";
 import About from "./About";
-import GifBackground, { useChangeGif, useShowStatic } from "./GifBackground";
+import GifBackground, { useChangeDance, useShowStatic } from "./GifBackground";
 import Player from "./Player";
+import DancePlayer from "./DancePlayer";
 import PlayPauseArea from "./PlayPauseArea";
 import PomodoroTimer from "./PomodoroTimer";
 import PressToStart from "./PressToStart";
@@ -36,13 +37,19 @@ function Club() {
   const [isPlaying, setIsPlaying] = useState(false);
   const setPomodoroShown = useSetRecoilState(pomodoroShownState);
   const setAboutShown = useSetRecoilState(aboutShownState);
-  const [currentStationId, setCurrentStationId] = useRecoilState(currentStationIdState);
+  const setCurrentStationId = useSetRecoilState(currentStationIdState);
   const location=useLocation();
   setCurrentPage(location.pathname);
+  
   const stations= useRecoilValue(newStation);
-  setCurrentStationId(stations[0].id);
+  useEffect(() => {
+    setCurrentStationId(stations[0].id);
+    if (playerShown) setIsPlaying(true);
+    setLowEnergyMode(true);
+  }, [currentPage]);
+  
   const showStatic = useShowStatic();
-  const changeGif = useChangeGif();
+  const changeDance = useChangeDance();
   const tweetStation = useTweetStation();
   useShowAboutFirstTime(isPlaying);
   useStationFromUrl("club");
@@ -57,7 +64,7 @@ function Club() {
     plausible.track("Change Station");
     showStatic(300);
     if (playSound) sounds.static.play();
-    changeGif();
+    // changeDance();
   }
 
   function handleStart() {
@@ -78,7 +85,7 @@ function Club() {
     ],
     ["t", tweetStation],
     ["l", () => setLowEnergyMode(!lowEnergyMode)],
-    ["g", changeGif],
+    ["g", changeDance],
     ["any", handleStart],
   ]);
 
@@ -95,28 +102,33 @@ function Club() {
           .trim()}
         onClick={handleStart}
       >
+        <DancePlayer
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+          onStationChanged={handleStationChanged}
+        />
         {playerShown && (
           <PlayPauseArea isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
         )}
-        <GifBackground />
+        {/* <GifBackground /> */}
         <div id="crt-lines" />
-        <div id="darken" />
+        {/* <div id="darken" /> */}
         <div id="vignette" />
         <div id="top-ui">
           <div>
             <VisitorsCounter />
           </div>
-
           <div className="vertical">
             {playerShown && (
               <RoomActions fullscreen={fs} fullscreenAvailable={fsAvailable} />
             )}
-
             <About />
             <PomodoroTimer />
           </div>
         </div>
-
+        <div className="goBackToBar">
+        <Link to="/" className="red">← Go back to bar</Link>
+        </div>
         {!playerShown && <PressToStart />}
         <Player
           isPlaying={isPlaying}
@@ -124,10 +136,15 @@ function Club() {
           onStationChanged={handleStationChanged}
         />
       </div>
-      <Link to="/" className="red goBackToBar">← Go back to bar</Link>
     </FullScreen>
   );
 }
+const reactPlayerStyle = {
+  pointerEvents: "none",
+  userSelect: "none",
+  zIndex: -1,
+  borderRadius: "8px",
+};
 
 export function detectTouch() {
   return "ontouchend" in document;

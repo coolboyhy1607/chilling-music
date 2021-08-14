@@ -1,9 +1,10 @@
 import { useRecoilValue } from "recoil";
-import { currentStationState } from "../recoilState";
+import { currentStationState, positionPage } from "../recoilState";
 import createTwitterLink from "../utils/createTwitterLink";
 import plausible from "../utils/plausible";
 
 export default function useTweetStation() {
+  const currentPosition=useRecoilValue(positionPage);
   const currentStation = useRecoilValue(currentStationState);
   function tweetStation() {
     if (currentStation) {
@@ -14,7 +15,7 @@ export default function useTweetStation() {
       window.open(
         createTwitterLink({
           text: `Chilling with 🎧 ${currentStation.name}`,
-          url: `https://chilling.bar/?station=${currentStation.id}`,
+          url: `https://chilling.bar${currentPosition}?station=${currentStation.id}`,
         })
       );
     }

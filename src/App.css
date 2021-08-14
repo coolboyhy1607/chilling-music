@@ -217,12 +217,18 @@ input::placeholder {
   top: 90px;
   left: 30px;
   z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .goToClub {
   position: absolute;
   bottom: 100px;
   right: 30px;
   z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .yt-wrapper {
@@ -246,12 +252,18 @@ input::placeholder {
     top: 60px;
     left: 20px;
     z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
   .goToClub {
     position: absolute;
     bottom: 100px;
     right: 20px;
     z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
   .hide-small-screen {
     display: none !important;
