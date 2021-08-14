@@ -3,6 +3,7 @@ import { getRandomIndex } from "./components/Player";
 import gifs from "./gifs";
 import staticGifs from "./staticGifs";
 import stations from "./stations";
+import danceMovie from "./danceMovie";
 
 const localStorageEffect =
   (key) =>
@@ -22,7 +23,19 @@ const localStorageEffect =
   };
 
 /* --------------------------------- Player --------------------------------- */
+export const positionPage=atom({
+  key: "positionPage",
+  default: "/",
+});
 
+export const newStation = selector({
+  key: "newStation",
+  get: ({ get }) => {
+    const currentPage= get(positionPage)
+    // console.debug(stations.filter((station) => station.type === currentPage));
+    return stations.filter((station) => station.type === currentPage)
+  }
+})
 export const playerShownState = atom({
   key: "playerShown",
   default: false,
@@ -42,30 +55,41 @@ export const isBufferingState = atom({
 export const currentStationIdState = atom({
   key: "currentStationId",
   default: stations[0].id,
-  effects_UNSTABLE: [localStorageEffect("currentStationId")],
+  effects_UNSTABLE: [
+    localStorageEffect("currentStationId"),
+    // ({onSet}) => {
+    //     onSet(newID => {
+    //       console.debug("currentStationId:", newID);
+    //     });
+    // }
+  ],
 });
 
 export const currentStationState = selector({
   key: "currentStation",
   get: ({ get }) => {
     const currentStationId = get(currentStationIdState);
-    const currentStation = stations.find(
+    const newstation = get(newStation);
+    // const currentPosition=get(positionPage);
+    const currentStation = newstation.find(
       (station) => station.id === currentStationId
     );
     if (currentStation) {
       return currentStation;
     } else {
       localStorage.removeItem("currentStationId");
-      return stations[0];
+      return newstation[0];
     }
   },
+  // set: ({get, set}, currentStation) => set(currentStationIdState, currentStation)
 });
 
 export const currentStationIndexState = selector({
   key: "currentStationIndex",
   get: ({ get }) => {
     const currentStation = get(currentStationState);
-    return stations.findIndex((station) => station === currentStation);
+    const newstation = get(newStation);
+    return newstation.findIndex((station) => station === currentStation);
   },
 });
 
@@ -118,4 +142,14 @@ export const staticShownState = atom({
 export const staticIndexState = atom({
   key: "staticIndex",
   default: getRandomIndex(staticGifs),
+});
+/* ---------------------------------- Dance Movie ---------------------------------- */
+export const currentDanceIndexState = atom({
+  key: "currentDanceIndex",
+  default: 0,
+  effects_UNSTABLE: [localStorageEffect("currentDanceIndex")],
+});
+export const nextDanceIndexState = atom({
+  key: "nextDanceIndex",
+  default: getRandomIndex(danceMovie),
 });

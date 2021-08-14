@@ -25,7 +25,7 @@ function Button({
           ...(text ? {} : { lineHeight: 0 }),
         }}
         className={className}
-        title={tooltip}
+        title=""
       >
         {icon && <Icon name={icon} style={{ marginRight: text ? 8 : 0 }} />}
         {text && <span>{text}</span>}

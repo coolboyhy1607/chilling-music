@@ -3,18 +3,21 @@ import LocalizedStrings from "react-localization";
 
 const strings = new LocalizedStrings({
   en: {
+    dj:"DJ: ",
     bartender: "bartender: ",
     listeningNow: "serving now",
     tapToStart: "tap to order something...  ",
     pressToStart: "press any key to order something...",
-    changeStation: "change your seat",
+    changeStation: "change station",
     playPause: "play/pause",
     tweetThisStation: "share your felling",
     changeGif: "change gif",
+    changeDance: "change club",
     showVideo: "show original video",
     lowPowerMode: "low-power mode",
     closeThis: "close this",
     sayHi: "Or click here to talk with bartender",
+    sayHiToDj:"Or click here to talk with DJ",
     updates: "New stations & updates",
     arrows: "arrows",
     spacebar: "spacebar",
