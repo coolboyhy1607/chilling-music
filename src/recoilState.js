@@ -3,6 +3,7 @@ import { getRandomIndex } from "./components/Player";
 import gifs from "./gifs";
 import staticGifs from "./staticGifs";
 import stations from "./stations";
+import danceMovie from "./danceMovie";
 
 const localStorageEffect =
   (key) =>
@@ -31,7 +32,7 @@ export const newStation = selector({
   key: "newStation",
   get: ({ get }) => {
     const currentPage= get(positionPage)
-    console.debug(stations.filter((station) => station.type === currentPage));
+    // console.debug(stations.filter((station) => station.type === currentPage));
     return stations.filter((station) => station.type === currentPage)
   }
 })
@@ -53,14 +54,15 @@ export const isBufferingState = atom({
 
 export const currentStationIdState = atom({
   key: "currentStationId",
-  default: stations[3].id,
+  default: stations[0].id,
   effects_UNSTABLE: [
     localStorageEffect("currentStationId"),
-    ({onSet}) => {
-        onSet(newID => {
-          console.debug("currentStationId:", newID);
-        });
-    }],
+    // ({onSet}) => {
+    //     onSet(newID => {
+    //       console.debug("currentStationId:", newID);
+    //     });
+    // }
+  ],
 });
 
 export const currentStationState = selector({
@@ -140,4 +142,14 @@ export const staticShownState = atom({
 export const staticIndexState = atom({
   key: "staticIndex",
   default: getRandomIndex(staticGifs),
+});
+/* ---------------------------------- Dance Movie ---------------------------------- */
+export const currentDanceIndexState = atom({
+  key: "currentDanceIndex",
+  default: 0,
+  effects_UNSTABLE: [localStorageEffect("currentDanceIndex")],
+});
+export const nextDanceIndexState = atom({
+  key: "nextDanceIndex",
+  default: getRandomIndex(danceMovie),
 });

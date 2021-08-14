@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import QuyenImage from "../images/avatars/quyen.png";
-import { aboutShownState } from "../recoilState";
+import { aboutShownState, positionPage } from "../recoilState";
 import strings from "../strings";
 import Button from "./Button";
 import FadeInDiv from "./FadeInDiv";
@@ -11,6 +11,7 @@ import Icon from "./Icon";
 
 function About() {
   const aboutShown = useRecoilValue(aboutShownState);
+  const currentPosition=useRecoilValue(positionPage);
   // const aboutShown2=aboutShown? "flex" : "none";
   return (
     <FadeInDiv show={aboutShown}  className="about-container">
@@ -25,7 +26,7 @@ function About() {
         <span className="red">T</span> {strings.tweetThisStation}
       </span>
       <span style={{ marginBottom: "4px" }}>
-        <span className="red">G</span> {strings.changeGif}
+        <span className="red">G</span> {currentPosition==="/" ? strings.changeGif : strings.changeDance}
       </span>
       <span style={{ marginBottom: "12px" }}>
         <span className="red">V</span> {strings.showVideo}
@@ -42,7 +43,7 @@ function About() {
       </span>
       <NewsletterForm />
       <a href="mailto:hey@chilling.bar">
-        <Button style={{marginTop:"10px"}} text={strings.sayHi} tooltip="say Hi"/>
+        <Button style={{marginTop:"10px"}} text={currentPosition==="/" ? strings.sayHi : strings.sayHiToDj} tooltip="say Hi"/>
       </a>
       <span style={{ marginBottom: "16px" }} />
       <a target="_blank" rel="noreferrer" href="https://www.buymeacoffee.com/congquyen">
@@ -53,10 +54,11 @@ function About() {
 }
 
 const TeamMembers = () => {
+  const currentPosition=useRecoilValue(positionPage);
   return (
     <span style={{ display: "flex", marginBottom: "10px" }}>
       <span style={{ marginBottom: "4px" }}>
-        {strings.bartender}
+        {currentPosition === "/" ? strings.bartender : strings.dj}
       </span>
       <TeamMember name="Cong Quyen" username="quyen.cong" image={QuyenImage} />
     </span>
