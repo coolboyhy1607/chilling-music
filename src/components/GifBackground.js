@@ -1,7 +1,10 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import danceMovie from "../danceMovie";
 import gifs from "../gifs";
 import {
+  currentDanceIndexState,
   currentGifIndexState,
+  nextDanceIndexState,
   nextGifIndexState,
   staticIndexState,
   staticShownState,
@@ -53,7 +56,18 @@ export function useChangeGif() {
 
   return changeGif;
 }
+export function useChangeDance() {
+  const setCurrentDanceIndex = useSetRecoilState(currentDanceIndexState);
+  const [nextDanceIndex, setNextDanceIndex] = useRecoilState(nextDanceIndexState);
 
+  function changeDance() {
+    setCurrentDanceIndex(nextDanceIndex);
+    const randomDanceIndex = getRandomIndex(danceMovie, nextDanceIndex);
+    setNextDanceIndex(randomDanceIndex);
+  }
+
+  return changeDance;
+}
 export function useShowStatic() {
   const setStaticShown = useSetRecoilState(staticShownState);
   const [staticIndex, setStaticIndex] = useRecoilState(staticIndexState);

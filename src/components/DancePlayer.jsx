@@ -3,6 +3,7 @@ import ReactPlayer from "react-player";
 import { useRecoilState, useRecoilValue} from "recoil";
 import useIsIOS from "../hooks/useIsIOS";
 import useKeysPressed from "../hooks/useKeysPressed";
+import danceMovie from "../danceMovie";
 import {
   currentStationIdState,
   currentStationIndexState,
@@ -13,27 +14,28 @@ import {
   playerVolumeState,
   stationsSelectorOpenState,
   positionPage,
-  newStation
+  newStation,
+  currentDanceIndexState
 } from "../recoilState";
 // import stations from "../stations";
 import plausible from "../utils/plausible";
-import BlinkingDots from "./BlinkingDots";
-import Button from "./Button";
-import Selector from "./Selector";
+// import BlinkingDots from "./BlinkingDots";
+// import Button from "./Button";
+// import Selector from "./Selector";
 import Spacer from "./Spacer";
 import VolumeSlider from "./VolumeSlider";
 
-function Player({ onStationChanged, isPlaying, setIsPlaying }) {
+function DancePlayer({ onStationChanged, isPlaying, setIsPlaying }) {
   const show = useRecoilValue(playerShownState);
 
   const [stationsSelectorOpen, setStationsSelectorOpen] = useRecoilState(
     stationsSelectorOpenState
   );
-
-  const stations= useRecoilValue(newStation);
-  const [currentStationId, setCurrentStationId] = useRecoilState(currentStationIdState);
-  const currentStation = useRecoilValue(currentStationState);
-  const currentStationIndex = useRecoilValue(currentStationIndexState);
+  const [danceIndex, setDanceIndex]=useRecoilState(currentDanceIndexState)
+//   const stations= useRecoilValue(newStation);
+//   const [currentStationId, setCurrentStationId] = useRecoilState(currentStationIdState);
+//   const currentStation = useRecoilValue(currentStationState);
+//   const currentStationIndex = useRecoilValue(currentStationIndexState);
   // const currentPage = useRecoilValue(positionPage);
 
   const [reactPlayerLoading, setReactPlayerLoading] = useState(true);
@@ -47,9 +49,6 @@ function Player({ onStationChanged, isPlaying, setIsPlaying }) {
   const [_embedShown, setEmbedShown] = useRecoilState(embedShownState);
   let embedShown = !error && playerShown && _embedShown;
 
-  //currentStationIdStateの初期値を修正
-  // setCurrentStationId(currentStation.id);
-
   const isIOS = useIsIOS();
 
   function resetError() {
@@ -57,41 +56,38 @@ function Player({ onStationChanged, isPlaying, setIsPlaying }) {
     setErrorMsg("");
   }
 
-  function handlePlaying(playing) {
-    if (playing) {
-      plausible.track("Player - Play");
-    } else {
-      plausible.track("Player - Pause");
-    }
-    setIsPlaying(playing);
-  }
+//   function handlePlaying(playing) {
+//     if (playing) {
+//       plausible.track("Player - Play");
+//     } else {
+//       plausible.track("Player - Pause");
+//     }
+//     setIsPlaying(playing);
+//   }
 
   const handleShufflePlay = useCallback(() => {
     resetError();
-    setStationsSelectorOpen(false);
-    const randomStationIndex = getRandomIndex(stations, currentStationIndex);
-    setCurrentStationId(stations[randomStationIndex].id);
-    onStationChanged();
-    plausible.track("Player - Shuffle");
-  }, [currentStationIndex, onStationChanged]);
+    const randomDanceIndex = getRandomIndex(danceMovie, danceIndex);
+    setDanceIndex(danceMovie[randomDanceIndex]);
+  }, [danceIndex]);
 
-  function handleGoBack() {
-    resetError();
-    setStationsSelectorOpen(false);
-    const prevStationIndex = getPrevIndex(stations, currentStationIndex);
-    setCurrentStationId(stations[prevStationIndex].id);
-    onStationChanged();
-    plausible.track("Player - Back");
-  }
+//   function handleGoBack() {
+//     resetError();
+//     setStationsSelectorOpen(false);
+//     const prevStationIndex = getPrevIndex(stations, currentStationIndex);
+//     setCurrentStationId(stations[prevStationIndex].id);
+//     onStationChanged();
+//     plausible.track("Player - Back");
+//   }
 
-  function handleGoForward() {
-    resetError();
-    setStationsSelectorOpen(false);
-    const nextStationIndex = getNextIndex(stations, currentStationIndex);
-    setCurrentStationId(stations[nextStationIndex].id);
-    onStationChanged();
-    plausible.track("Player - Forward");
-  }
+//   function handleGoForward() {
+//     resetError();
+//     setStationsSelectorOpen(false);
+//     const nextStationIndex = getNextIndex(stations, currentStationIndex);
+//     setCurrentStationId(stations[nextStationIndex].id);
+//     onStationChanged();
+//     plausible.track("Player - Forward");
+//   }
 
   function volumeUp() {
     setPlayerVolume(Math.round(Math.min(playerVolume + 0.1, 1) * 10) / 10);
@@ -109,50 +105,50 @@ function Player({ onStationChanged, isPlaying, setIsPlaying }) {
     setEmbedShown(!embedShown);
   }
 
-  useKeysPressed(
-    [
-      ["ArrowRight", handleGoForward],
-      ["ArrowLeft", handleGoBack],
-      ["ArrowUp", volumeUp],
-      ["ArrowDown", volumeDown],
-      ["v", handleShowOriginalVideo],
-      ["Escape", () => setStationsSelectorOpen(false)],
-      [" ", () => handlePlaying(!isPlaying)],
-    ],
-    show
-  );
+//   useKeysPressed(
+//     [
+//       ["ArrowRight", handleGoForward],
+//       ["ArrowLeft", handleGoBack],
+//       ["ArrowUp", volumeUp],
+//       ["ArrowDown", volumeDown],
+//       ["v", handleShowOriginalVideo],
+//       ["Escape", () => setStationsSelectorOpen(false)],
+//       [" ", () => handlePlaying(!isPlaying)],
+//     ],
+//     show
+//   );
 
   /* ----------------------------- Handle Loading ----------------------------- */
 
-  useEffect(() => {
-    let timeout;
-    if (isBuffering) {
-      timeout = setTimeout(() => {
-        setLongBuffering(true);
-      }, 3000);
-      return () => clearTimeout(timeout);
-    } else {
-      clearTimeout(timeout);
-      setLongBuffering(false);
-    }
-  }, [isBuffering, currentStation]);
+//   useEffect(() => {
+//     let timeout;
+//     if (isBuffering) {
+//       timeout = setTimeout(() => {
+//         setLongBuffering(true);
+//       }, 3000);
+//       return () => clearTimeout(timeout);
+//     } else {
+//       clearTimeout(timeout);
+//       setLongBuffering(false);
+//     }
+//   }, [isBuffering, currentStation]);
 
   /* ------------------------------ Handle Error ------------------------------ */
 
-  useEffect(() => {
-    if (error === 150) {
-      setErrorMsg("Ops, this station is not working. Skipping it");
-      const timeout = setTimeout(() => {
-        resetError();
-        handleShufflePlay();
-      }, 4000);
-      return () => clearTimeout(timeout);
-    }
-  }, [error, handleShufflePlay]);
+//   useEffect(() => {
+//     if (error === 150) {
+//       setErrorMsg("Ops, this station is not working. Skipping it");
+//       const timeout = setTimeout(() => {
+//         resetError();
+//         handleShufflePlay();
+//       }, 4000);
+//       return () => clearTimeout(timeout);
+//     }
+//   }, [error, handleShufflePlay]);
 
   return (
     <>
-      <div style={{ ...containerInnerStyle, display: show ? "block" : "none" }}>
+      {/* <div style={{ ...containerInnerStyle, display: show ? "block" : "none" }}>
         {!stationsSelectorOpen && errorMsg && (
           <span className="red">
             {errorMsg}
@@ -205,20 +201,20 @@ function Player({ onStationChanged, isPlaying, setIsPlaying }) {
             <LoadingText />
           </div>
         )}
-      </div>
+      </div> */}
       <div
-        style={embedShown ? wrapperStyle : hiddenStyle}
+        style={wrapperStyle}
         className="yt-wrapper"
       >
         <div style={innerWrapperStyle}>
           <ReactPlayer
             controls={false}
             playing={isPlaying}
-            url={"https://www.youtube.com/watch?v=" + currentStation.id}
+            url={"https://www.youtube.com/watch?v="+danceMovie[danceIndex]}
             style={reactPlayerStyle}
             width="100vw"
             height="200vw"
-            volume={playerVolume}
+            volume={0}
             config={{
               youtube: {
                 playerVars: {
@@ -292,13 +288,20 @@ const hiddenStyle = {
 };
 
 const innerWrapperStyle = {
-  width: "100%",
-  height: "100%",
-  overflow: "hidden",
+//   width: "100%",
+//   height: "100%",
+//   overflow: "hidden",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  borderRadius: "8px",
+//   borderRadius: "8px",
+  position: "absolute",
+  width: "100vw",
+  height: "100vh",
+  top: "0",
+  left: "0",
+  objectFit: "cover",
+  zIndex: 1,
 };
 
 const reactPlayerStyle = {
@@ -321,4 +324,4 @@ const LoadingText = () => {
 
   return <span>Loading{dots}</span>;
 };
-export default Player;
+export default DancePlayer;
