@@ -13,7 +13,8 @@ import {
   pomodoroShownState,
   positionPage,
   currentStationIdState,
-  newStation
+  newStation,
+  nextDanceIndexState
 } from "../recoilState";
 import sounds from "../sounds";
 import strings from "../strings";
@@ -29,6 +30,8 @@ import PressToStart from "./PressToStart";
 import RoomActions from "./RoomActions";
 import VisitorsCounter from "./VisitorsCounter";
 import {Link} from "react-router-dom";
+import danceMovie from "../danceMovie";
+import { getRandomIndex } from "./Player";
 
 function Club() {
   const [playerShown, setPlayerShown] = useRecoilState(playerShownState);
@@ -38,6 +41,7 @@ function Club() {
   const setPomodoroShown = useSetRecoilState(pomodoroShownState);
   const setAboutShown = useSetRecoilState(aboutShownState);
   const setCurrentStationId = useSetRecoilState(currentStationIdState);
+  const [nextDanceIndex,setNextDanceIndex]=useRecoilState(nextDanceIndexState);
   const location=useLocation();
   setCurrentPage(location.pathname);
   
@@ -46,6 +50,8 @@ function Club() {
     setCurrentStationId(stations[0].id);
     if (playerShown) setIsPlaying(true);
     setLowEnergyMode(true);
+    const randomDanceIndex = getRandomIndex(danceMovie, nextDanceIndex);
+    setNextDanceIndex(randomDanceIndex);
   }, [currentPage]);
   
   const showStatic = useShowStatic();
@@ -64,7 +70,7 @@ function Club() {
     plausible.track("Change Station");
     showStatic(300);
     if (playSound) sounds.static.play();
-    // changeDance();
+    changeDance();
   }
 
   function handleStart() {
