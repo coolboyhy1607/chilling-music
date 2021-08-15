@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import { useState,useEffect } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useRecoilState, useSetRecoilState,useRecoilValue } from "recoil";
 import useKeysPressed from "../hooks/useKeysPressed";
@@ -14,14 +14,14 @@ import {
   positionPage,
   currentStationIdState,
   newStation,
-  nextDanceIndexState
+  currentDanceIndexState,
+  dancePlayerLoading
 } from "../recoilState";
 import sounds from "../sounds";
 import strings from "../strings";
 import detectFullscreenAvailable from "../utils/detectFullscreenAvailable";
 import plausible from "../utils/plausible";
 import About from "./About";
-import GifBackground, { useChangeDance, useShowStatic } from "./GifBackground";
 import Player from "./Player";
 import DancePlayer from "./DancePlayer";
 import PlayPauseArea from "./PlayPauseArea";
@@ -32,6 +32,7 @@ import VisitorsCounter from "./VisitorsCounter";
 import {Link} from "react-router-dom";
 import danceMovie from "../danceMovie";
 import { getRandomIndex } from "./Player";
+import { useChangeDance, useShowStatic } from "./GifBackground";
 
 function Club() {
   const [playerShown, setPlayerShown] = useRecoilState(playerShownState);
@@ -41,19 +42,19 @@ function Club() {
   const setPomodoroShown = useSetRecoilState(pomodoroShownState);
   const setAboutShown = useSetRecoilState(aboutShownState);
   const setCurrentStationId = useSetRecoilState(currentStationIdState);
-  const [nextDanceIndex,setNextDanceIndex]=useRecoilState(nextDanceIndexState);
+  const [danceIndex,setDanceIndex]=useRecoilState(currentDanceIndexState);
+  const dancePlayerLoad = useRecoilValue(dancePlayerLoading);
   const location=useLocation();
   setCurrentPage(location.pathname);
   
   const stations= useRecoilValue(newStation);
   useEffect(() => {
     setCurrentStationId(stations[0].id);
-    if (playerShown) setIsPlaying(true);
-    setLowEnergyMode(true);
-    const randomDanceIndex = getRandomIndex(danceMovie, nextDanceIndex);
-    setNextDanceIndex(randomDanceIndex);
+    setIsPlaying(false);
+    const randomDanceIndex = getRandomIndex(danceMovie, danceIndex);
+    setDanceIndex(randomDanceIndex);
+    // eslint-disable-next-line
   }, [currentPage]);
-  
   const showStatic = useShowStatic();
   const changeDance = useChangeDance();
   const tweetStation = useTweetStation();
@@ -70,7 +71,7 @@ function Club() {
     plausible.track("Change Station");
     showStatic(300);
     if (playSound) sounds.static.play();
-    changeDance();
+    // changeDance();
   }
 
   function handleStart() {
@@ -110,10 +111,8 @@ function Club() {
       >
         <DancePlayer
           isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
-          onStationChanged={handleStationChanged}
         />
-        {playerShown && (
+        {playerShown && !dancePlayerLoad && (
           <PlayPauseArea isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
         )}
         {/* <GifBackground /> */}
@@ -125,7 +124,7 @@ function Club() {
             <VisitorsCounter />
           </div>
           <div className="vertical">
-            {playerShown && (
+            {playerShown && !dancePlayerLoad && (
               <RoomActions fullscreen={fs} fullscreenAvailable={fsAvailable} />
             )}
             <About />
@@ -135,7 +134,7 @@ function Club() {
         <div className="goBackToBar">
         <Link to="/" className="red">← Go back to bar</Link>
         </div>
-        {!playerShown && <PressToStart />}
+        {!playerShown && !dancePlayerLoad && <PressToStart />}
         <Player
           isPlaying={isPlaying}
           setIsPlaying={setIsPlaying}
@@ -145,12 +144,6 @@ function Club() {
     </FullScreen>
   );
 }
-const reactPlayerStyle = {
-  pointerEvents: "none",
-  userSelect: "none",
-  zIndex: -1,
-  borderRadius: "8px",
-};
 
 export function detectTouch() {
   return "ontouchend" in document;

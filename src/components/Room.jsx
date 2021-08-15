@@ -36,7 +36,7 @@ function Room() {
   const [isPlaying, setIsPlaying] = useState(false);
   const setPomodoroShown = useSetRecoilState(pomodoroShownState);
   const setAboutShown = useSetRecoilState(aboutShownState);
-  const [currentStationId, setCurrentStationId] = useRecoilState(currentStationIdState);
+  const setCurrentStationId = useSetRecoilState(currentStationIdState);
 
   const location=useLocation();
   setCurrentPage(location.pathname);
@@ -44,8 +44,9 @@ function Room() {
   const stations= useRecoilValue(newStation);
   useEffect(() => {
     setCurrentStationId(stations[0].id);
-    if (playerShown) setIsPlaying(true);
+    if (playerShown) setIsPlaying(false);
     setLowEnergyMode(false)
+    // eslint-disable-next-line
   }, [currentPage]);
   const showStatic = useShowStatic();
   const changeGif = useChangeGif();

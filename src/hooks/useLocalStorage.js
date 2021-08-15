@@ -35,12 +35,14 @@ export default function useLocalStorage(key, initialValue) {
         console.log("error writing local storage", error);
       }
     },
+    // eslint-disable-next-line
     [storedValue]
   );
 
   const resetValue = useCallback(() => {
     window.localStorage.removeItem(key);
     setStoredValue(initialValue);
+    // eslint-disable-next-line
   }, []);
 
   return [storedValue, setValue, resetValue];
