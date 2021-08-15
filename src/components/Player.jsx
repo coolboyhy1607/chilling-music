@@ -309,7 +309,7 @@ const reactPlayerStyle = {
 };
 
 const LoadingText = () => {
-  let isMounted=true;
+  const [isMounted,setIsMounted] = useState(true);
   const [dots, setDots] = useState("");
   useEffect(() => {
     setTimeout(() => {
@@ -320,7 +320,8 @@ const LoadingText = () => {
         if (dots === "...") setDots("");
       }
     }, 300);
-    return () =>{isMounted=false};
+    return () =>{setIsMounted(false)};
+    // eslint-disable-next-line
   }, [dots]);
 
   return <span>Loading{dots}</span>;
