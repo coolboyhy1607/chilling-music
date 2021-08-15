@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const BlinkingCursor = ({ blinking, style }) => {
-  let isMounted=true;
+  const [isMounted,setIsMounted] = useState(true);
   const [cursor, setCursor] = useState("█");
   useEffect(() => {
     if(isMounted){
@@ -14,7 +14,8 @@ const BlinkingCursor = ({ blinking, style }) => {
         setCursor("█");
       };
     }
-  return () =>{isMounted=false};
+  return () =>{setIsMounted(false)};
+  // eslint-disable-next-line
   }, [blinking, cursor]);
   return (
     <span

@@ -9,13 +9,8 @@ import {
   currentDanceIndexState,
   currentStationIndexState,
   dancePlayerLoading,
-  playerShownState,
-  stationsSelectorOpenState
 } from "../recoilState";
-import BlinkingDots from "./BlinkingDots";
 function DancePlayer({ isPlaying}) {
-  const show = useRecoilValue(playerShownState);
-  const stationsSelectorOpen = useRecoilValue(stationsSelectorOpenState);
   const [danceIndex, setDanceIndex]=useRecoilState(currentDanceIndexState);
   const currentStationIndex = useRecoilValue(currentStationIndexState);
   const setReactPlayerLoading = useSetRecoilState(dancePlayerLoading);

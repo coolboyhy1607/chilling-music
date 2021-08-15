@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const BlinkingDot = ({ blinking, ...otherProps }) => {
-  let isMounted=true;
+  const [isMounted,setIsMounted] =useState(true);
   const [dot, setDot] = useState("•");
   useEffect(() => {
     if(isMounted){
@@ -14,7 +14,8 @@ const BlinkingDot = ({ blinking, ...otherProps }) => {
       setDot("•");
     };
   }
-  return () =>{isMounted=false};
+  return () =>{setIsMounted(false)};
+  // eslint-disable-next-line
   }, [blinking, dot]);
   return <span {...otherProps}>{dot}</span>;
 };
