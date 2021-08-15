@@ -32,13 +32,17 @@ export const newStation = selector({
   key: "newStation",
   get: ({ get }) => {
     const currentPage= get(positionPage)
-    // console.debug(stations.filter((station) => station.type === currentPage));
     return stations.filter((station) => station.type === currentPage)
   }
 })
 export const playerShownState = atom({
   key: "playerShown",
   default: false,
+});
+
+export const dancePlayerLoading = atom({
+  key: "dancePlayerLoading",
+  default: true,
 });
 
 export const playerVolumeState = atom({
