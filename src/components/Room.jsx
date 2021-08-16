@@ -136,7 +136,6 @@ function Room() {
     </FullScreen>
   );
 }
-
 export function detectTouch() {
   return "ontouchend" in document;
 }

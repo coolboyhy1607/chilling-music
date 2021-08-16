@@ -29,8 +29,13 @@ import PressToStart from "./PressToStart";
 import RoomActions from "./RoomActions";
 import VisitorsCounter from "./VisitorsCounter";
 import {Link} from "react-router-dom";
+import danceMovie from "../danceMovie";
+import { getRandomIndex } from "./Player";
+import { useChangeDance, useShowStatic } from "./GifBackground";
+import { useSwipeable } from "react-swipeable";
 
 function Club() {
+  const handlers = useSwipeable({onSwipedRight: () => changeDance()});
   const [playerShown, setPlayerShown] = useRecoilState(playerShownState);
   const [lowEnergyMode, setLowEnergyMode] = useRecoilState(lowEnergyModeState);
   const [currentPage,setCurrentPage] = useRecoilState(positionPage);
@@ -107,8 +112,8 @@ function Club() {
           setIsPlaying={setIsPlaying}
           onStationChanged={handleStationChanged}
         />
-        {playerShown && (
-          <PlayPauseArea isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
+        {playerShown && !dancePlayerLoad && (
+          <PlayPauseArea handles={handlers} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
         )}
         {/* <GifBackground /> */}
         <div id="crt-lines" />

@@ -7,7 +7,7 @@ import {
 } from "../recoilState";
 import Icon from "./Icon";
 
-export default function PlayPauseArea({ isPlaying, setIsPlaying }) {
+export default function PlayPauseArea({handles, isPlaying, setIsPlaying }) {
   const [hovering, setHovering] = useState(false);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function PlayPauseArea({ isPlaying, setIsPlaying }) {
   if (aboutShown || pomodoroShown || selectorOpen) return null;
 
   return (
-    <div
+    <div {...handles}
       style={{
         position: "absolute",
         top: "25%",
