@@ -41,7 +41,7 @@ function Selector({ currentStationId, setCurrentStationId, isPlaying }) {
       return (
         <span>
           <span className="red" style={{ display: "inline" }}>
-            click to change >{" "}
+            click to change &gt;{" "}
           </span>
           {currentStation.name}
         </span>

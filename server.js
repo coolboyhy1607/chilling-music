@@ -1,33 +1,31 @@
-var express = require("express");
-var browserify  = require('browserify-middleware');
-var babelify = require("babelify");
-var browserSync = require('browser-sync');
-var app = express();
-var port = process.env.PORT || 3000;
-
-browserify.settings ({
-  transform: [babelify.configure({
-  })],
-  presets: ["es2015", "react"],
-  extensions: ['.js', '.jsx','.js','.tsx'],
-  grep: /\.jsx?$/
-});
-
-app.get('/bundle.js', browserify(__dirname+'/src/index.tsx'));
-
-app.get(['*.png','*.jpg','*.css','*.map'], function (req, res) {
-  res.sendFile(__dirname+"/public/"+req.path);
-});
-app.get('*', function (req, res) {
-  res.sendFile(__dirname+"/public/index.html");
-});
-// Run the server
-app.listen(port,function() {
-  browserSync ({
-    proxy: 'localhost:' + port,
-        files: ['src/components/*.{jsx}','build/static/css/*.{css}'],
-    options: {
-      ignored: 'node_modules'
-    }
-  });
-});
+/**
+ * Require Browsersync along with webpack and middleware for it
+ */
+ var browserSync = require('browser-sync');
+ var webpack = require('webpack');
+ var webpackDevMiddleware = require('webpack-dev-middleware');
+ var webpackHotMiddleware = require('webpack-hot-middleware');
+ 
+ var webpackConfig = require('./webpack.config');
+ var bundler = webpack(webpackConfig);
+ 
+ browserSync({
+     server: {
+       baseDir: 'dist',
+ 
+       middleware: [
+         webpackDevMiddleware(bundler, {
+           publicPath: webpackConfig.output.publicPath,
+           stats: { colors: true }
+           // http://webpack.github.io/docs/webpack-dev-middleware.html
+         }),
+ 
+         webpackHotMiddleware(bundler)
+       ]
+     },
+ 
+     files: [
+       'dist/css/*.css',
+       'dist/*.html'
+     ]
+ });
