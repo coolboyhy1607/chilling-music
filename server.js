@@ -11,7 +11,7 @@
  
  browserSync({
      server: {
-       baseDir: 'dist',
+       baseDir: 'public',
  
        middleware: [
          webpackDevMiddleware(bundler, {
@@ -25,7 +25,7 @@
      },
  
      files: [
-       'dist/css/*.css',
-       'dist/*.html'
+       'src/*.css',
+       'public/index.html'
      ]
  });

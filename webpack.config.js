@@ -1,16 +1,16 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const webpack =require('webpack');
 module.exports = {
   mode: 'development',
   devtool: 'source-map',
-  entry: path.resolve(__dirname, './src/index.jsx'),
+  entry: ['webpack/hot/dev-server', 'webpack-hot-middleware/client', './src/index'],
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: ['react-hot-loader/webpack', 'babel-loader']
       },
       {
         test: /\.(tsx|ts)$/,
@@ -26,9 +26,13 @@ module.exports = {
           loader: 'file-loader',
           options: {
               outputPath: 'images',
-              type: 'asset',
           }
         },
+        
+      },
+      {
+        test: /\.html$/i,
+        loader: "html-loader",
       },
     ]
   },
@@ -36,15 +40,17 @@ module.exports = {
     extensions: ['*', '.jsx','.js','.tsx','.ts']
   },
   output: {
-    path: path.resolve(__dirname, './build'),
+    path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
+
 
   },
   devServer: {
     open: true,
+    writeToDisk: true,
     host: 'localhost',
-    port:3002,
-    contentBase: path.resolve(__dirname, './build'),
+    port:3000,
+    contentBase: path.join(__dirname, 'public'),
     historyApiFallback: {
       rewrites:[
         {from: /^\/$/, to: '/index.html'}
@@ -60,6 +66,8 @@ module.exports = {
       filename: 'index.html',
       inject: 'body',
     }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   externals: {
     'react': 'react'
