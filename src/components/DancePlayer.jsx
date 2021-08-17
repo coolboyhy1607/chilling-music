@@ -1,51 +1,25 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState} from "react";
 import ReactPlayer from "react-player";
-import { useRecoilState, useRecoilValue} from "recoil";
-import useIsIOS from "../hooks/useIsIOS";
+import { useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import danceMovie from "../danceMovie";
+import Icon from "./Icon";
 import {
   embedShownState,
   isBufferingState,
-  playerShownState,
   playerVolumeState,
-  stationsSelectorOpenState,
-  positionPage,
-  newStation,
-  currentDanceIndexState
+  currentDanceIndexState,
+  currentStationIndexState,
+  dancePlayerLoading,
 } from "../recoilState";
-// import stations from "../stations";
-import plausible from "../utils/plausible";
-// import BlinkingDots from "./BlinkingDots";
-// import Button from "./Button";
-// import Selector from "./Selector";
-import Spacer from "./Spacer";
-import VolumeSlider from "./VolumeSlider";
+function DancePlayer({ isPlaying}) {
+  const [danceIndex, setDanceIndex]=useRecoilState(currentDanceIndexState);
+  const currentStationIndex = useRecoilValue(currentStationIndexState);
+  const setReactPlayerLoading = useSetRecoilState(dancePlayerLoading);
 
-function DancePlayer({isPlaying}) {
-  const show = useRecoilValue(playerShownState);
-
-  const [stationsSelectorOpen, setStationsSelectorOpen] = useRecoilState(
-    stationsSelectorOpenState
-  );
-  const [danceIndex, setDanceIndex]=useRecoilState(currentDanceIndexState)
-//   const stations= useRecoilValue(newStation);
-//   const [currentStationId, setCurrentStationId] = useRecoilState(currentStationIdState);
-//   const currentStation = useRecoilValue(currentStationState);
-//   const currentStationIndex = useRecoilValue(currentStationIndexState);
-  // const currentPage = useRecoilValue(positionPage);
-
-  const [reactPlayerLoading, setReactPlayerLoading] = useState(true);
-  const [isBuffering, setIsBuffering] = useRecoilState(isBufferingState);
-  const [longBuffering, setLongBuffering] = useState(null);
-  const [playerVolume, setPlayerVolume] = useRecoilState(playerVolumeState);
+  const setIsBuffering = useSetRecoilState(isBufferingState);
+  // const [playerVolume, setPlayerVolume] = useRecoilState(playerVolumeState);
   const [error, setError] = useState(null);
   const [errorMsg, setErrorMsg] = useState("");
-  const playerShown = useRecoilValue(playerShownState);
-
-  const [_embedShown, setEmbedShown] = useRecoilState(embedShownState);
-  let embedShown = !error && playerShown && _embedShown;
-
-  const isIOS = useIsIOS();
 
   function resetError() {
     setError(null);
@@ -55,36 +29,22 @@ function DancePlayer({isPlaying}) {
   const handleShufflePlay = useCallback(() => {
     resetError();
     const randomDanceIndex = getRandomIndex(danceMovie, danceIndex);
-    setDanceIndex(danceMovie[randomDanceIndex]);
-  }, [danceIndex]);
-
-  /* ----------------------------- Handle Loading ----------------------------- */
-
-  useEffect(() => {
-    let timeout;
-    if (isBuffering) {
-      timeout = setTimeout(() => {
-        setLongBuffering(true);
-      }, 3000);
-      return () => clearTimeout(timeout);
-    } else {
-      clearTimeout(timeout);
-      setLongBuffering(false);
-    }
-  }, [isBuffering, currentStation]);
+    setDanceIndex(randomDanceIndex);
+    // eslint-disable-next-line
+  }, [currentStationIndex]);
 
   /* ------------------------------ Handle Error ------------------------------ */
 
-//   useEffect(() => {
-//     if (error === 150) {
-//       setErrorMsg("Ops, this station is not working. Skipping it");
-//       const timeout = setTimeout(() => {
-//         resetError();
-//         handleShufflePlay();
-//       }, 4000);
-//       return () => clearTimeout(timeout);
-//     }
-//   }, [error, handleShufflePlay]);
+  useEffect(() => {
+    if (error === 150) {
+      setErrorMsg("Ops, this video is not working. Skipping it");
+      const timeout = setTimeout(() => {
+        resetError();
+        handleShufflePlay();
+      }, 4000);
+      return () => clearTimeout(timeout);
+    }
+  }, [error, handleShufflePlay]);
 
   return (
     <>
@@ -135,8 +95,6 @@ function DancePlayer({isPlaying}) {
             pip={true}
             onReady={() => setReactPlayerLoading(false)}
             onError={(err) => setError(err)}
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
             onBuffer={() => setIsBuffering(true)}
             onBufferEnd={() => setIsBuffering(false)}
             onStart={() => setIsBuffering(false)}
@@ -172,14 +130,6 @@ const wrapperStyle = {
   bottom: 0,
   zIndex: 0,
   background: "black",
-};
-
-const hiddenStyle = {
-  pointerEvents: "none",
-  userSelect: "none",
-  position: "fixed",
-  top: "100%",
-  left: "100%",
 };
 
 const innerWrapperStyle = {

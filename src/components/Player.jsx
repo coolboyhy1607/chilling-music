@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { useRecoilState, useRecoilValue} from "recoil";
 import useIsIOS from "../hooks/useIsIOS";
@@ -12,7 +12,6 @@ import {
   playerShownState,
   playerVolumeState,
   stationsSelectorOpenState,
-  positionPage,
   newStation
 } from "../recoilState";
 // import stations from "../stations";
@@ -73,6 +72,7 @@ function Player({ onStationChanged, isPlaying, setIsPlaying }) {
     setCurrentStationId(stations[randomStationIndex].id);
     onStationChanged();
     plausible.track("Player - Shuffle");
+    // eslint-disable-next-line
   }, [currentStationIndex, onStationChanged]);
 
   function handleGoBack() {
@@ -309,14 +309,19 @@ const reactPlayerStyle = {
 };
 
 const LoadingText = () => {
+  const [isMounted,setIsMounted] = useState(true);
   const [dots, setDots] = useState("");
   useEffect(() => {
     setTimeout(() => {
-      if (dots === "") setDots(".");
-      if (dots === ".") setDots("..");
-      if (dots === "..") setDots("...");
-      if (dots === "...") setDots("");
+      if (isMounted){
+        if (dots === "") setDots(".");
+        if (dots === ".") setDots("..");
+        if (dots === "..") setDots("...");
+        if (dots === "...") setDots("");
+      }
     }, 300);
+    return () =>{setIsMounted(false)};
+    // eslint-disable-next-line
   }, [dots]);
 
   return <span>Loading{dots}</span>;

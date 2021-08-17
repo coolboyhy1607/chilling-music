@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react";
 
 const BlinkingCursor = ({ blinking, style }) => {
+  const [isMounted,setIsMounted] = useState(true);
   const [cursor, setCursor] = useState("█");
   useEffect(() => {
-    if (blinking) {
-      setTimeout(() => {
-        if (cursor === "") setCursor("█");
-        if (cursor === "█") setCursor("");
-      }, 600);
-    } else {
-      setCursor("█");
+    if(isMounted){
+      if (blinking) {
+        setTimeout(() => {
+          if (cursor === "") setCursor("█");
+          if (cursor === "█") setCursor("");
+        }, 600);
+      } else {
+        setCursor("█");
+      };
     }
+  return () =>{setIsMounted(false)};
+  // eslint-disable-next-line
   }, [blinking, cursor]);
   return (
     <span
