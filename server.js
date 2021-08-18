@@ -11,7 +11,7 @@
  
  browserSync({
      server: {
-       baseDir: 'public',
+       baseDir: 'build',
  
        middleware: [
          webpackDevMiddleware(bundler, {

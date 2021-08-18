@@ -4,7 +4,7 @@ const webpack =require('webpack');
 module.exports = {
   mode: 'development',
   devtool: 'source-map',
-  entry: ['webpack/hot/dev-server', 'webpack-hot-middleware/client', './src/index'],
+  entry: ['webpack/hot/dev-server', 'webpack-hot-middleware/client', './src/index.jsx'],
   module: {
     rules: [
       {
@@ -40,22 +40,17 @@ module.exports = {
     extensions: ['*', '.jsx','.js','.tsx','.ts']
   },
   output: {
-    path: path.join(__dirname, 'public'),
+    path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
-
-
+    publicPath: '/'
   },
   devServer: {
     open: true,
+    publicPath: '/',
     writeToDisk: true,
     host: 'localhost',
     port:3000,
-    contentBase: path.join(__dirname, 'public'),
-    historyApiFallback: {
-      rewrites:[
-        {from: /^\/$/, to: '/index.html'}
-      ]
-    },
+
     watchOptions: {
       ignored: /node_modules/
     }
