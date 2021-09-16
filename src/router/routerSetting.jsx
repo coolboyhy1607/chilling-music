@@ -7,9 +7,4 @@ export const routerSetting=[
         exact: true,
         children: <Room />
     },
-    {
-        path: "/club",
-        exact: false,
-        children: <Club />
-    },
 ]
