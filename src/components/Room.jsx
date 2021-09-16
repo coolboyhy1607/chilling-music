@@ -124,7 +124,7 @@ function Room() {
           </div>
         </div>
         <div className="goToClub">
-        <Link to="/club" className="red">Go to Club</Link><div style={{fontSize:"30px"}}>🔞</div>
+        {/* <Link to="/club" className="red">Go to Club</Link><div style={{fontSize:"30px"}}>🔞</div> */}
         </div>
         {!playerShown && <PressToStart />}
         <Player
