@@ -46,7 +46,6 @@ function About() {
       <a href="mailto:hey@chilling.bar">
         <Button style={{marginTop:"10px"}} text={currentPosition==="/" ? strings.sayHi : strings.sayHiToDj} tooltip="say Hi"/>
       </a>
-      <Button onClick={methodDoesNotExist}>Break the world</Button>
       <span style={{ marginBottom: "16px" }} />
       <a target="_blank" rel="noreferrer" href="https://www.buymeacoffee.com/congquyen">
         <span>Buy me a beer </span><span>🍺</span>
