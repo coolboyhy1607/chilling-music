@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { useRecoilValue } from "recoil";
 import QuyenImage from "../images/avatars/quyen.png";
 import { aboutShownState, positionPage } from "../recoilState";
