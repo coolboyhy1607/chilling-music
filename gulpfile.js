@@ -1,5 +1,4 @@
 import pkg from "gulp";
-const { series, watch, src, dest, parallel } = pkg;
 import pump  from "pump";
 import beeper  from "beeper";
 import browserSync  from "browser-sync";
@@ -18,6 +17,7 @@ import postcssential  from "postcss-cssential";
 import postcssMixins  from "postcss-mixins";
 import postcssCustomProperties  from "postcss-custom-properties";
 import postcssColor  from "postcss-color-function";
+const { series, watch, src, dest, parallel } = pkg;
 
 
 // Define base folders
@@ -98,7 +98,7 @@ const js = done => {
         `${asset_src}types/**/*.ts`,
         `${asset_src}utils/**/*.js`,
         `${asset_src}utils/**/*.ts`
-      ], 
+      ],
       { sourcemaps: true }),
       babel({
         'presets': [

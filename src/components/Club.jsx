@@ -46,7 +46,7 @@ function Club() {
   const dancePlayerLoad = useRecoilValue(dancePlayerLoading);
   const location=useLocation();
   setCurrentPage(location.pathname);
-  
+
   const stations= useRecoilValue(newStation);
   useEffect(() => {
     setCurrentStationId(stations[0].id);
@@ -120,9 +120,9 @@ function Club() {
         {/* <div id="darken" /> */}
         <div id="vignette" />
         <div id="top-ui">
-          <div>
+          {/* <div>
             <VisitorsCounter />
-          </div>
+          </div> */}
           <div className="vertical">
             {playerShown && !dancePlayerLoad && (
               <RoomActions fullscreen={fs} fullscreenAvailable={fsAvailable} />

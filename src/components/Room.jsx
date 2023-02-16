@@ -111,7 +111,7 @@ function Room() {
         <div id="vignette" />
         <div id="top-ui">
           <div>
-            <VisitorsCounter />
+            {/* <VisitorsCounter /> */}
           </div>
 
           <div className="vertical">
@@ -133,7 +133,7 @@ function Room() {
           onStationChanged={handleStationChanged}
         />
       </div>
-      
+
     </FullScreen>
   );
 }
